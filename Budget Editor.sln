@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget Editor", "Budget Editor\Budget Editor.csproj", "{DDD2C30C-D9B4-42D6-9A77-1B4515817E67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDD2C30C-D9B4-42D6-9A77-1B4515817E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD2C30C-D9B4-42D6-9A77-1B4515817E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD2C30C-D9B4-42D6-9A77-1B4515817E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD2C30C-D9B4-42D6-9A77-1B4515817E67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DDFD293-323E-4394-9542-7F93F38EB980}
+	EndGlobalSection
+EndGlobal
