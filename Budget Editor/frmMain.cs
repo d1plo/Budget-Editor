@@ -34,27 +34,22 @@ namespace Budget_Editor
         #region Variables
         private Point _imageLocation = new Point(13, 5); //Used for drawing tabs
         private Point _imageHitArea = new Point(13, 2); //Used for drawing tabs
-        private bool SavedAs;
-        private bool Saved;
+        //private bool SavedAs;
+        //private bool Saved;
+        public string defaultFileName = "untitled.txt";
+        List<scintillaControl> controls = new List<scintillaControl>();
+        private int selectedTab; 
         #endregion
 
         #region Methods
-        private void NewTab()
-        {
-            scintillaControl txtEditor = new scintillaControl();
-            txtEditor.Dock = DockStyle.Fill;
-            TabPage newTab = new TabPage("untitled.txt");
-            newTab.Controls.Add(txtEditor);
-            tabCtrl.TabPages.Add(newTab);
-        }
         private void CloseTab(object sender, MouseEventArgs e)
         {
             TabControl tc = (TabControl)sender;
             Point p = e.Location;
-            int _tabWidth = 0;
-            _tabWidth = this.tabCtrl.GetTabRect(tc.SelectedIndex).Width - (_imageHitArea.X);
+            int tabWidth = 0;
+            tabWidth = this.tabCtrl.GetTabRect(tc.SelectedIndex).Width - (_imageHitArea.X);
             Rectangle rect = this.tabCtrl.GetTabRect(tc.SelectedIndex);
-            rect.Offset(_tabWidth, _imageHitArea.Y);
+            rect.Offset(tabWidth, _imageHitArea.Y);
             rect.Width = 16;
             rect.Height = 16;
             if (tabCtrl.SelectedIndex >= 1)
@@ -62,7 +57,7 @@ namespace Budget_Editor
                 if (rect.Contains(p))
                 {
                     TabPage tabpage = (TabPage)tc.TabPages[tc.SelectedIndex];
-                    tc.TabPages.Remove(tabpage);
+                    tabCtrl.TabPages.Remove(tabpage);
                 }
             }
             else if (tabCtrl.SelectedIndex == 0 && tabCtrl.TabPages.Count > 1)
@@ -70,7 +65,7 @@ namespace Budget_Editor
                 if (rect.Contains(p))
                 {
                     TabPage tabpage = (TabPage)tc.TabPages[tc.SelectedIndex];
-                    tc.TabPages.Remove(tabpage);
+                    tabCtrl.TabPages.Remove(tabpage);
                 }
             }
             else
@@ -91,6 +86,27 @@ namespace Budget_Editor
             e.Graphics.DrawImage(closeImage, (tabRect.Right - closeImage.Width), tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
             TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font, tabRect, tabPage.ForeColor, TextFormatFlags.Left);
         }
+        private void NewTab()
+        {
+            scintillaControl newsc = new scintillaControl();
+            newsc.Dock = DockStyle.Fill;
+            controls.Add(newsc);
+            newsc.txtEditor.Zoom = controls[0].txtEditor.Zoom;
+            TabPage newTab = new TabPage(defaultFileName);
+            newTab.Controls.Add(newsc);
+            tabCtrl.TabPages.Add(newTab);
+        }
+        private void ShowStatusBar()
+        {
+            if(tsStatusBar.Checked)
+            {
+                statusStrip.Visible = true;
+            }
+            else
+            {
+                statusStrip.Visible = false;
+            }
+        }
         #endregion
 
         #region Events
@@ -106,7 +122,6 @@ namespace Budget_Editor
         {
             CloseTab(sender, e);
         }
-
         #endregion
 
         #region File
@@ -120,7 +135,7 @@ namespace Budget_Editor
         }
         private void tsSave_Click(object sender, EventArgs e)
         {
-
+            
         }
         private void tsSaveAs_Click(object sender, EventArgs e)
         {
@@ -129,6 +144,48 @@ namespace Budget_Editor
         private void tsExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+        #endregion
+
+        #region Edit
+        private void tsCut_Click(object sender, EventArgs e)
+        {
+            selectedTab = tabCtrl.SelectedIndex;
+            scintillaControl sc = controls[selectedTab];
+            sc.txtEditor.Cut();
+        }
+        private void tsCopy_Click(object sender, EventArgs e)
+        {
+            selectedTab = tabCtrl.SelectedIndex;
+            scintillaControl sc = controls[selectedTab];
+            sc.txtEditor.Copy();
+        }
+        private void tsPaste_Click(object sender, EventArgs e)
+        {
+            selectedTab = tabCtrl.SelectedIndex;
+            scintillaControl sc = controls[selectedTab];
+            sc.txtEditor.Paste();
+        }
+        #endregion
+
+        #region View
+        private void tsZoomIn_Click(object sender, EventArgs e)
+        {
+            foreach(scintillaControl sc in controls)
+            {
+                sc.txtEditor.ZoomIn();
+            }
+        }
+        private void tsZoomOut_Click(object sender, EventArgs e)
+        {
+            foreach (scintillaControl sc in controls)
+            {
+                sc.txtEditor.ZoomOut();
+            }
+        }
+        private void tsStatusBar_Click(object sender, EventArgs e)
+        {
+            ShowStatusBar();
         }
         #endregion
     }

@@ -56,6 +56,6 @@
 
         #endregion
 
-        private ScintillaNET.Scintilla txtEditor;
+        public ScintillaNET.Scintilla txtEditor;
     }
 }
